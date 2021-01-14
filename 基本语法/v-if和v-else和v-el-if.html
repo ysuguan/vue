@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div v-if="isTrue<=40">
+      <ul>
+        <li>abc</li>
+        <li>abc</li>
+        <li>abc</li>
+        <li>abc</li>
+      </ul>
+    </div>
+    <input v-else-if="isTrue<=80" type="text" value="xxxx">
+    <ul v-else-if="isTrue<=100">
+      <li>hahah</li>
+      <li>hahah</li>
+      <li>hahah</li>
+      <li>hahah</li>
+      <li>hahah</li>
+      <li>hahah</li>
+    </ul>
+    <button v-else>这是大于100显示的内容</button>
+  </div>
+  <script src='../source/vue.js'></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        isTrue: 0
+      }
+    });
+  </script>
+</body>
+</html>

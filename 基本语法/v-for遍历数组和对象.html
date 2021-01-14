@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(movie,key) in movies">{{key+movie}}</li>
+    </ul>
+    <ul>
+      <li v-for="(item,key,index) in person">{{index + key}}:{{item}}</li>
+    </ul>
+  </div>
+  <script src='../source/vue.js'></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        movies: ['rainman', '推拿', '搓澡'],
+        person: {
+          name: 'john',
+          age: 19,
+          height: 200
+        }
+      }
+    });
+  </script>
+</body>
+</html>

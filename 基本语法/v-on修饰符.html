@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app" @click="divClick()">
+    aaaaaaa
+    <!-- 阻止事件冒泡 -->
+    <button @click.stop="btnClick()">++</button>
+    <br>
+    <form action="wwww.baidu.com">
+      <!-- 阻止原生行为 -->
+      <input type="submit" value="提交" @click.prevent="formClick()">
+    </form>
+    <br>
+    <!-- 按键抬起监听 -->
+    <input  @click.stop @keyup.enter="keyUp()"></input>
+    <!-- 只触发一次行为 -->
+    <button @click.once="clickOnce()">只能点击一次</button>
+  </div>
+  <script src='../source/vue.js'></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+
+      },
+      methods: {
+        divClick(){
+          console.log('div');
+        },
+        btnClick(){
+          console.log('btn');
+        },
+        formClick(){
+          console.log('form');
+        },
+        keyUp(){
+          console.log('key');
+        },
+        clickOnce(){
+          console.log('我也想多点几次啊');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

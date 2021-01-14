@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    [v-cloak]{
+      display : none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <ul>
+      <li v-for="item in letters">{{item}}</li>
+    </ul>
+    <button @click="arrayControl()">click</button>
+  </div>
+  <script src='../source/vue.js'></script>
+  <script>
+    //响应式的数组函数有以下几个：
+    // push()
+    // pop()
+    // shift()
+    // unshift()
+    // splice()
+    // sort()
+    // reverse()
+    setTimeout(() => {
+      const app = new Vue({
+      el: '#app',
+      data: {
+        letters: ['a', 'b', 'c', 'd', 'e']
+      },
+      methods: {
+        arrayControl () {
+          //Vue.set()是vue的内置函数，也是响应式的。
+          Vue.set(this.letters, 0, 'xxxxx');
+        }
+      }
+    })
+    }, 2000);
+    
+  </script> 
+</body>
+</html>

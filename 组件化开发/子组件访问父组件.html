@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <cpn>
+    </cpn>
+  </div>
+
+  <template id="cpn1">
+    <div>
+      <button @click="showParents">按钮</button>
+    </div>
+  </template>
+
+  <template id="cpn">
+    <div>
+      子组件在父组件的模板中使用
+      <cpn1></cpn1>
+    </div>
+  </template>
+  <script src='../source/vue.js'></script>
+  <script>
+    const cpn1 = {
+      template: '#cpn1',
+      data(){
+        return {
+          level: 'last'
+        };
+      },
+      methods: {
+        showParents(){
+          console.log(this.level);
+          console.log(this.$parent.$parent);
+          console.log(this.$root);
+        }
+      }
+    };
+
+    const cpn = {
+      template: '#cpn',
+      data (){
+        return {
+          level: 'parent'
+        };
+      },
+      components: {
+        cpn1
+      }
+    };
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        title: '标题'
+      },
+      components: {
+        cpn
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 1.多个匿名插槽会调用所有匿名元素（多个匿名元素会被当成一个来看待）
+         2.具名插槽在定义模板时用name命名，使用时通过slot匹配 -->
+    <cpn><button>点我</button><input type="text" value='123' slot="middle"><button>点xxs我</button></cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <h2>标题</h2>
+      <p>内容123123123123</p>
+      <slot><button>1点我</button></slot>
+      <slot name="middle"><button>2点我</button></slot>
+      <slot><button>3点我</button></slot>
+    </div>
+  </template>
+  <script src='../source/vue.js'></script>
+  <script>
+    const cpn = {
+      template: '#cpn'
+    };
+
+    const app = new Vue({
+      el: '#app',
+      data: {},
+      components: {
+        cpn
+      }
+    });
+  </script>
+</body>
+</html>

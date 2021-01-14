@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 父组件自定义子组件的标签，但是使用子组件的数据，此时需要作用域插槽来实现（只通过模板来实现数据渲染，View的内容
+  尽量不调用Model的代码） -->
+    <div id="app">
+      <cpn>
+        <template slot-scope="test">
+          <span v-for="item in test.languageList">{{item}}***</span>
+        </template>
+      </cpn>
+      <cpn>
+        <template slot-scope="haha">
+          <span>{{showSlotData(haha)}}</span>
+        </template>
+      </cpn>
+    </div>
+
+    <template id="cpn">
+      <div>
+        <slot :language-list='pLanguages'>
+          <ul v-for="item in pLanguages">
+            <li>{{item}}</li>
+          </ul>
+        </slot>
+      </div>
+    </template>
+    <script src='../source/vue.js'></script>
+    <script>
+      const cpn = {
+        template: "#cpn",
+        data (){
+          return {
+            pLanguages : ['C', 'C++', 'Python', 'PHP', 'Javascript', 'C#']
+          };
+        }
+      };
+      const app = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+          showSlotData(haha){
+            return haha.languageList.join('%%%');
+          }
+        },
+        components: {
+          cpn
+        }
+      });
+    </script>
+</body>
+</html>

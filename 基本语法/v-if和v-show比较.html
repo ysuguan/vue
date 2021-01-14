@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div v-if="isTrue">
+      这是v-if应该显示的内容
+    </div>
+    <div v-show="isTrue">
+      这是v-show应该显示的内容
+    </div>
+  </div>
+  <script src='../source/vue.js'></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        isTrue: true
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <h1>总计:{{totalPrice}}</h1>
+    </div>
+    <script src='../source/vue.js'></script>
+    <script>
+
+        setTimeout(
+            function(){
+                const app = new Vue({
+                    el: '#app',
+                    data: {
+                        books: [
+                            {id: 1, name: 'javascript高级程序设计', price: 86},
+                            {id: 2, name: '计算机网络：自顶向下方法', price: 93},
+                            {id: 3, name: '深入浅出mysql', price: 52},
+                            {id: 4, name: '简明python手册', price: 38}
+                        ]
+                    },
+                    computed: {
+                        totalPrice: function(){
+                            let result = 0;
+                            for(let i of this.books){
+                                result += i.price;
+                            }
+                            return result;
+                        }
+                    }
+                });
+            }, 2000
+        )
+        
+    </script>
+</body>
+</html>

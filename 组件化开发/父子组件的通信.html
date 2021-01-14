@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 父组件通过在调用子组件时用v-bind向子组件props中声明的形参传入数据 -->
+    <!-- 3.子组件声明的事件被父组件监听，此处不必传入参数，收到的数据参数会默认传入 -->
+    <cpn :ctitle="title" :cperson="subContent()" @cbtnclick="subCpnClick"></cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <h2>{{ctitle}}</h2>
+      <ul>
+        <li v-for="(item,key) in cperson">{{key}}:{{item}}</li>
+      </ul>
+      <!-- 1.子组件通过绑定事件函数发射信号 -->
+      <button @click="cBtnClick(cperson)">点击增加身高</button>
+    </div>
+  </template>
+  <script src='../source/vue.js'></script>
+  <script>
+    const cpn = {
+      template: "#cpn",
+      props: {
+        ctitle: {
+          type: String,
+          default: '1111',
+          required: false
+        },
+        cperson: {
+          type: Object,
+          default (){
+            return {
+              name: 'noman',
+              age: 0,
+              height: 180
+            }
+          }
+        }
+      },
+      methods: {
+        cBtnClick(item){
+          //父组件传递过来的数据一旦与子组件的props绑定，就可以通过this访问(复杂类型数据都是传引用)
+          this.cperson.height++;
+          //2.子组件发射的信号必传一个自定义的事件名，可选数据参数
+          this.$emit('cbtnclick', item);
+        }
+      }
+    };
+    
+    const app = new Vue({
+      el: '#app',
+      data: {
+        person: {
+          name: 'haulk',
+          age: 18,
+          height: 190
+        },
+        title: '个人介绍'
+      },
+      components: {
+        cpn
+      },
+      methods: {
+        //4.父组件绑定的方法被触发
+        subCpnClick(item){
+          console.log(item.height);
+          console.log(this.person.height);
+        },
+        //
+        subContent(){
+          console.log(222);
+          //如果不想传引用就通过深拷贝函数给子组件绑定参数
+          return Object.assign({},this.person);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

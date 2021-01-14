@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 简单的v-model双向绑定数据 -->
+    <input type="text" id='simpleInput' v-model="message">
+    <span>输入的内容是：{{message}}</span>
+    <br>
+
+    <!-- v-model逻辑实现 -->
+    <input type="text" id="complicatedInput" @input="listenInput($event)" :value="message2">
+    <span>输入的内容是：{{message2}}</span>
+    <br>
+
+
+    <!-- v-model在radio中的应用 -->
+    <label for="man">
+      <input type="radio" value='man' name='sex' v-model='sex'>男
+    </label>
+    <label for="woman">
+      <input type="radio" value='woman' name='sex' v-model='sex'>女
+    </label>
+    <span>现在选择的性别是：{{sex}}</span>
+    <br>
+
+
+    <!-- v-model在checkbox中的使用 -->
+    <label for="football">
+      <input type="checkbox" id="football" value="football" v-model='sports'>足球
+    </label>
+    <label for="basketball">
+      <input type="checkbox" id="basketball" value="basketball" v-model='sports'>篮球
+    </label>
+    <label for="baseball">
+      <input type="checkbox" id="baseball" value="baseball" v-model='sports'>棒球
+    </label>
+    <label for="tabletennis">
+      <input type="checkbox" id="tabletennis" value="tabletennis" v-model='sports'>乒乓球
+    </label>
+    <span>选中的内容：{{sports}}</span>
+    <br>
+
+
+
+    <!-- v-model在select中的使用：单选 -->
+    <select name="fruit" id="fruit" v-model="fruit">
+      <option value="apple">苹果</option>
+      <option value="banana">香蕉</option>
+      <option value="orange">橘子</option>
+      <option value="pineapple">菠萝</option>
+    </select>
+    <span>选择的水果是：{{fruit}}</span>
+    <br>
+    <!-- v-model在select中的使用：多选 -->
+    <select name="fruits" id="fruits" v-model="fruits" multiple>
+      <option value="apple">苹果</option>
+      <option value="banana">香蕉</option>
+      <option value="orange">橘子</option>
+      <option value="pineapple">菠萝</option>
+    </select>
+    <span>选择的水果是：{{fruits}}</span>
+    <br>
+
+    <!-- 值绑定的使用，注意要设置两个数组，一个放置可选项，一个放置已选项 -->
+    <label v-for="item in sports2" :for="item">
+      <input type="checkbox" :id="item" :value="item" v-model="newsports2">{{item}}
+    </label>
+    <span>{{newsports2}}</span>
+    <br>
+    <br>
+
+
+    <!-- 修饰符lazy、number、trim的使用 -->
+    <input type="text" v-model.lazy="info1">
+    <span>{{info1}}</span>
+    <br>
+    <input type="number" v-model.number="info2">
+    <span>{{typeof info2}}{{info2}}</span>
+    <br>
+    <input type="text" v-model.trim="info3">
+    <span>{{info3}}</span>
+  </div>
+  <script src='../source/vue.js'></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: 'hello',
+        message2: 'world',
+        sex: '',
+        sports: [],
+        fruit:'',
+        fruits: [],
+        sports2: ['足球','篮球','棒球','排球','冰球'],
+        newsports2: [],
+        info1: '你好',
+        info2: '',
+        info3: ''
+      },
+      methods: {
+        listenInput(event){
+          this.message2 = event.target.value
+        }
+      }
+    });
+  </script>
+</body>
+</html>
