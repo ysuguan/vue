@@ -386,7 +386,25 @@
         $store.state.a.state属性
         //其他方法的访问都和父级一样，因此，父子模块中的方法名不能重复
        ```
+    + 向actions方法中传参可以通过对象的结构完成
+      ```
+        //对象的解构示例代码
+        const obj = {
+            name: 'haha',
+            age: 12,
+            height: 199
+        }
+        const {name, height, age} = obj
+
+        //actions中的使用
+        act1({state, commit, rootState}){
+            ...
+        }
+      ```
 12. #### 组织store的目录结构，进行代码抽离
+    + mutations、getters、actions都在store下抽出单独的文件放置
+    + modules新建一个目录，根据模块抽离各个module再导入
+    + rootState不抽离
 
 ## 任务
 ### promise
@@ -404,5 +422,6 @@
 4. 定义一个mutations方法，能自定义的修改store中的值,使用第二种提交风格，并观察参数的变化
 5. 在调用时向store中添加一个新的属性，观察页面变化；然后通过响应式添加执行同类操作，观察页面变化;再使用delete删除store中的一个属性，观察页面变化；最后通过响应式删除store属性，观察页面变化
 6. 定义超过一个类型常量并使用
-7. 执行一个异步操作改变state并使devtools能追踪到该操作，再使用两种方法在异步操作完成后执行可变的的收尾工作。
+7. 执行一个异步操作改变state并使devtools能追踪到该操作，再使用两种方法在异步操作完成后执行可变的的收尾工作。并尝试通过对象解构方式针对性传入参数
 8. 定义一个module，分别访问其中的state、mutations、actions、getter；再通过module中的各种方法尝试访问父级属性/方法
+9. 调整代码解构
