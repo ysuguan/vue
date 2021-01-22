@@ -419,9 +419,11 @@
 1. 安装devtools,安装vuex，配置vuex目录结构，引入vuex，运行测试项目，直接访问并修改store中的变量，通过devtools观察全局state变化
 2. 通过在mutations中定义方法修改state中的值，并通过devtools观察每次执行mutations方法时state的变化
 3. 使用getters筛选一组学生中年龄大于20岁的并在页面上显示,并通过getters显示符合条件的学生个数,实现一个getters方法，能够根据自定义数字返回年龄比之大的学生列表
+   + 注意：箭头函数的函数体如果被`{}`包裹，必须用return来传递返回值
 4. 定义一个mutations方法，能自定义的修改store中的值,使用第二种提交风格，并观察参数的变化
 5. 在调用时向store中添加一个新的属性，观察页面变化；然后通过响应式添加执行同类操作，观察页面变化;再使用delete删除store中的一个属性，观察页面变化；最后通过响应式删除store属性，观察页面变化
 6. 定义超过一个类型常量并使用
 7. 执行一个异步操作改变state并使devtools能追踪到该操作，再使用两种方法在异步操作完成后执行可变的的收尾工作。并尝试通过对象解构方式针对性传入参数
 8. 定义一个module，分别访问其中的state、mutations、actions、getter；再通过module中的各种方法尝试访问父级属性/方法
-9. 调整代码解构
+   + 子模块中的mutations方法中的`this`指向父级，actions方法的`context`参数指向子模块自身
+9.  调整代码解构
