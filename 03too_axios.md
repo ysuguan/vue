@@ -68,20 +68,17 @@
 3. #### axios 常见配置选项与全局配置
     + 全局配置：在使用前用`axios.default.配置名`指定即可
       ```
-        axios.default.baseURL = 'http://123.207.32.32:8000/data?type=pop&page=1';
-        axios.default.timeout = 5000;
+        axios.defaults.baseURL = 'http://123.207.32.32:8000';
+        axios.defaults.timeout = 5000;
       ``` 
     + 常见配置选项：get与post请求不同的参数传递配置
       ```
-        axios.get({
-          url: url1,
-          params: {...}
-        });
+        axios.get(url1, { params: {...}} );
 
-        axios.post({
-          url: url2,
-          data: {...}
-        })
+        axios.post(
+          url2,
+          {...}
+        )
       ```
 4. #### axios 实例与模块封装：上方调用axios类的静态方法相当于用全局的axios和配置进行网络请求，对于需要使用不同配置的模块不方便，此时就应当生成axios的实例
     ```
@@ -128,7 +125,7 @@
             baseUrl:'http://123.207.32.32:8000',
             timeout: 5
           });
-            instans(config).then(res => {
+            instance(config).then(res => {
               resolve(res);
             }).catch(err => {
               reject(err);
@@ -147,7 +144,7 @@
       ```
 5. #### axios 提供了拦截器，是我们可以在发生网络请求或收到响应后可以做出一些动作
    + 拦截器会在四个不同的时机下被触发：请求之前/失败，响应成功/失败
-   + **拦截器的使用场景**：需要修改请求信息（数据检查，添加token...），触发请求动画，请求失败的跳转，响应数据的过滤，响应失败的跳转
+   + **拦截器的使用场景**：需要修改请求信息（数据检查，添加token...），触发请求动画，请求失败的跳转，响应数据的过滤，响应失败的跳转。只有在通过该接口的数据都需要做固定处理时才用得上拦截器
    + 拦截器应当通过axios实例来调用
    + 拦截器应当将接受到的数据/错误信息进行返回，否则后续instance对象将无数据可用
    ```
@@ -188,4 +185,5 @@
     6. 生成axios实例，向两个不同的地址请求数据并打印，一个传参数，一个不传参数
 2. #### 封装axios模块，完成以下操作：
     1. 使用两种不同方式传递参数，三种不同方式允许外部可变地处理网络请求数据
+      + 在promise中 `const res = instance(config)`获得的`res`是一个promise结果对象，可以直接传入resolve/reject作为参数使用，但是这种情况下难以在promise内明确调用resolve还是reject，所以，应当把resolve/reject的调用放到异步操作（instance）中执行
     2. 分别使用请求拦截器和响应拦截器，打印观察不同时机下触发接收到的内容
