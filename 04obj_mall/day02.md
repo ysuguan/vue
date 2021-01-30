@@ -48,8 +48,55 @@
     + pullUpLoad应该在home组件中配置，因为scroll组件是要多处调用的
     + 根据pullUpLoad值来确定是否监听`pullingup`
     + 避免直接访问/修改子组件的属性，有需要都建议通过封装的子组件方法来实现，尤其是第三方组件的属性，在源码外是不可见的，封装能够更好地解耦，代码也更容易理解
-2. tabcontrol 吸顶效果的实现
+2. #### tabcontrol 吸顶效果的实现
   + 所有组件对象都有`$el`属性，用来访问组件中的所有元素
   + 访问组件元素的`offSetTop`时，由于是在mounted中访问，图片可能没有加载完，所以值会偏小
   + 判断tabcontrol的offSetTop值变化来修改fixed属性时，由于betterscroll的transform和translate属性变化影响，会出现tabcontrol消失和图片瞬移现象，所以实际吸顶效果是通过额外tabcontrol组件根据原组件offsettop变化设置v-show来实现的
   + 要注意同步两个tabcontrol当前选中的goodstype
+3. #### Home页面状态保留
+   + 主要是指better-scroll滑动页面复位，通过home组件keepalive，并在`activated`和`deactivated`方法中保存位置和跳转到保存位置
+   + `activated`中返回记忆位置后再执行一次`scroll.refresh()`，避免出现bug
+4. #### 详情页开发
+    + 跳转并携带商品id
+    ```
+      //新建detail页面模块
+      //配置detail页面路由
+      path: '/detail/:iid',
+      component: 'Detail'
+
+      //主页商品组件点击事件跳转
+      this.$router.push(‘/detail/’+this.goodsItem.iid);
+
+      //详情组件获取iid
+      this.iid = this.$route.params.iid
+    ``` 
+    + 封装导航栏
+      + 新建detailnavi组件，通过navibar组件封装详情页导航栏，设置返回按钮功能，为文字设置点击特效
+    + 封装detailswiper，设置swiper高度适配页面，并在app.vue的`keep-alive`中配置`exclude`，避免详情页无法在`created`时更新数据
+    + 封装商品信息组件，在`detail`页面进行数据整合，**将子组件需要的数据整合到一个变量**
+      ```
+        //network/detail.js中定义并导出一个类，用于存储该页面需要的所有数据
+        export class Goods{
+          constructor(itemInfo, xxx, yyy){
+            this.newPrice = itemInfo.price
+            ...
+          }
+        }
+      ```
+    + 封装商家信息组件，同样整合一个存放数据的`Shop`类
+    + 引入scroll，设置滑动效果
+    + 商品图片展示组件封装，解决scroll的content长度计算问题
+      ```
+        //每次图片加载完成，判读加载完的图片和图片数量是否一致，所有图片加载完向父组件发射信号，完成scroll.refresh()
+        if( ++this.counter === this.imageNum){
+          this.$emit('imageLoaded');
+        }
+
+        //watch监听图片信息列表的变化，避免上方每次循环都需要获取一次图片列表长度
+        watch: {
+          detailInfo() {
+            this.imageNum = this.detailInfo.detailImage[0].list.length;
+          }
+        }
+      ```
+    + 参数信息的展示：同样要用单独的类托管数据
